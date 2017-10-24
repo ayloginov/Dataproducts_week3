@@ -1,0 +1,53 @@
+---
+title: "Week 3 Assignment"
+author: "ayloginov"
+date: "October 24, 2017"
+output: 
+    ioslides_presentation:
+            smaller: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+## Mtcars dataset
+```{r, warning=FALSE}
+suppressPackageStartupMessages({library(plotly)})
+library(plotly)
+data("mtcars")
+
+mtcars$cyl <- as.factor(mtcars$cyl)
+mtcars$am <- as.factor(mtcars$am)
+mtcars$vs <- as.factor(mtcars$vs)
+mtcars$gear <- as.factor(mtcars$gear)
+mtcars$carb <- as.factor(mtcars$carb)
+levels(mtcars$am) <- c("Automatic", "Manual")
+```
+The plot shows the fuel efficiency of cars with different features - number of cylinders (color), horsepower (marker size) and transmission type (marker symbol)
+
+```{r, warning=FALSE}
+f <- list(
+    family = "Arial",
+    size = 15
+)
+x <- list(
+    title = "Car weight (1,000 lbs)",
+    titlefont = f
+)
+y <- list(
+    title = "Miles per gallon",
+    titlefont = f
+)
+
+plot_ly(mtcars, x = ~wt, y = ~mpg, type='scatter', mode="markers", 
+                    color = as.factor(mtcars$cyl), 
+                    size = ~hp,
+                    symbol = ~am) %>%
+    layout(title = "Fuel efficiency of cars",
+           xaxis = x, yaxis = y, margin = list(l = 40, r = 40, b = 40, t = 40, pad = 4))
+
+```
+
